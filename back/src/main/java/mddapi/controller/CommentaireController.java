@@ -42,7 +42,7 @@ public class CommentaireController {
 	@SecurityRequirement(name = "Bearer Authentication")
 	@PutMapping("/{id}")
 	public ResponseEntity<Map<String,String>> createCommentForArticle(Authentication auth,@PathVariable Integer id,@RequestParam String contenu){
-		if(auth==null) {
+		if(auth == null || !auth.isAuthenticated()) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("message", "Authorization invalid"));
 		}
 		if(contenu.trim() == "") {
@@ -54,7 +54,7 @@ public class CommentaireController {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("message", "Unknown or deleted user"));
 		}
 		try {
-			comserv.createCommentaire(id, user.getId_user(), contenu);
+			comserv.createCommentaire(id, user.getIdUser(), contenu);
 			return ResponseEntity.ok(Map.of("message", "Commentary created"));
 		}catch(EntityNotFoundException ex) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("message","the article does not exist"));

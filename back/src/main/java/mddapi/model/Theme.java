@@ -6,7 +6,8 @@ import jakarta.persistence.*;
 public class Theme {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id_theme;
+    @Column(name = "id_theme")
+    private Integer idTheme;
 
     @Column(nullable = false, unique = true)
     private String name;
@@ -21,12 +22,12 @@ public class Theme {
 		this.description = description;
 	}
 
-	public Integer getId_theme() {
-		return id_theme;
+	public Integer getIdTheme() {
+		return idTheme;
 	}
 
-	public void setId_theme(Integer id_theme) {
-		this.id_theme = id_theme;
+	public void setIdTheme(Integer idTheme) {
+		this.idTheme = idTheme;
 	}
 
 	public String getName() {

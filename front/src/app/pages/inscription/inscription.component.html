@@ -1,0 +1,64 @@
+<app-header></app-header>
+<img class="back_arrow" src="/assets/back_arrow.png" alt="fleche retour en arrière" [routerLink]="''">
+<img class="logo" src="/assets/logo_p6.png" alt="logo" />
+<div class="form">
+  <h1>Inscription</h1>
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()" novalidate class="form">
+  
+    <div class="field">
+      <label for="username">Nom d'utilisateur</label>
+      <input id="username" formControlName="username" type="text" />
+      <div class="error" *ngIf="f['username'].touched && f['username'].invalid">
+        <div *ngIf="f['username'].errors?.['required']">
+          Le nom d'utilisateur est requis.
+        </div>
+        <div *ngIf="f['username'].errors?.['minlength']">
+          Au moins 3 caractères requis.
+        </div>
+        <div *ngIf="f['username'].errors?.['maxlength']">
+          Max 30 caractères.
+        </div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="email">Email</label>
+      <input id="email" formControlName="email" type="email" />
+      <div class="error" *ngIf="f['email'].touched && f['email'].invalid">
+        <div *ngIf="f['email'].errors?.['required']">
+          L'email est requis.
+        </div>
+        <div *ngIf="f['email'].errors?.['email']">
+          Format d'email invalide.
+        </div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="password">Mot de passe</label>
+      <input id="password" formControlName="password" type="password" />
+      <div class="error" *ngIf="f['password'].touched && f['password'].invalid">
+        <div *ngIf="f['password'].errors?.['required']">
+          Le mot de passe est requis.
+        </div>
+        <div *ngIf="f['password'].errors?.['minlength']">
+          Au moins 8 caractères requis.
+        </div>
+        <div *ngIf="f['password'].errors?.['lowercase']">
+          Doit contenir au moins une lettre minuscule.
+        </div>
+        <div *ngIf="f['password'].errors?.['uppercase']">
+          Doit contenir au moins une lettre majuscule.
+        </div>
+        <div *ngIf="f['password'].errors?.['special']">
+          Doit contenir au moins un caractère spécial.
+        </div>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button type="submit" [disabled]="userForm.invalid">Envoyer</button>
+    </div>
+    <div [innerHTML]="registerError"></div>
+  </form>
+</div>

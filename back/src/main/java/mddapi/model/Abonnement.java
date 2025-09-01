@@ -18,9 +18,6 @@ public class Abonnement {
     @JoinColumn(name = "id_theme", nullable = false)
     private Theme theme;
 
-    @Column(nullable = false)
-    private LocalDateTime date_abonnement;
-
     // Getters and Setters
     public Integer getId_abonnement() {
         return id_abonnement;
@@ -46,11 +43,4 @@ public class Abonnement {
         this.theme = theme;
     }
 
-    public LocalDateTime getDate_abonnement() {
-        return date_abonnement;
-    }
-
-    public void setDate_abonnement(LocalDateTime date_abonnement) {
-        this.date_abonnement = date_abonnement;
-    }
 }

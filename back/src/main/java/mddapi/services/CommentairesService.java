@@ -20,11 +20,11 @@ public class CommentairesService {
 	private UserRepository userRep;
 	
 	public List<Commentaire> fetchCommentaireByArticle(Integer id_article){
-		return comRep.findByArticle(id_article);
+		return comRep.findByArticle_IdArticle(id_article);
 	}
 	public void createCommentaire(Integer id_article, Integer id_user, String comment) {
-		Article article = artRep.findById(id_article).orElseGet(null);
-		User user = userRep.findById(id_user).orElseGet(null);
+		Article article = artRep.findById(id_article).orElse(null);
+		User user = userRep.findById(id_user).orElse(null);
 		if(article == null || user == null) {
 			throw new EntityNotFoundException();
 		}

@@ -1,0 +1,17 @@
+<div class="header">
+    <img class="logo" src="/assets/logo_p6.png" alt="logo" />
+    <div *ngIf="isLogged" class="navigation">
+        <h2 class="logout" (click)="logout()">Se déconnecter</h2>
+        <h2 class="article" routerLink="/accueil" routerLinkActive="active">Articles</h2>
+        <h2 class="theme"  routerLink="/theme" routerLinkActive="active">Thèmes</h2>
+        <img class="profile" src="/assets/user.png" alt="profile" />
+    </div>
+    <img class="menu" src="/assets/menu.png" alt="menu" (click)="toggleMenu()"/>
+    <div class="overlay" *ngIf="isMenuOpen" (click)="closeMenu()"></div>
+    <nav class="side-menu" [class.open]="isMenuOpen">
+        <h2 class="logout" (click)="closeMenu()">Se déconnecter</h2>
+        <h2 class="article" (click)="closeMenu()" routerLink="/accueil" routerLinkActive="active">Articles</h2>
+        <h2 class="theme" (click)="closeMenu()" routerLink="/theme" routerLinkActive="active">Thèmes</h2>
+        <img class="profile" src="/assets/user.png" alt="profile" />
+    </nav>
+</div>

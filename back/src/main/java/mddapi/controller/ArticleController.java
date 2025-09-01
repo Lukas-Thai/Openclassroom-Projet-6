@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.persistence.EntityNotFoundException;
+import mddapi.dto.ArticleResponse;
 import mddapi.model.Article;
 import mddapi.model.User;
 import mddapi.services.ArticlesService;
@@ -38,7 +39,7 @@ public class ArticleController {
 	@SecurityRequirement(name = "Bearer Authentication")
 	@GetMapping
 	public ResponseEntity<Map<String,Object>> fetchActualite(Authentication auth){
-		if(auth==null) {
+		if(auth == null || !auth.isAuthenticated()) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("message", "Authorization invalid"));
 		}
 		String email = auth.getName();
@@ -46,14 +47,14 @@ public class ArticleController {
 		if(user==null) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("message", "Unknown or deleted user"));
 		}
-		List<Article> filActu = artserv.fetchActualite(user.getId_user());
+		List<ArticleResponse> filActu = artserv.fetchActualite(user.getIdUser());
 		return ResponseEntity.ok(Map.of("articles",filActu));
 	}
 	@Operation(summary = "Create an article")
 	@SecurityRequirement(name = "Bearer Authentication")
 	@PutMapping
 	public ResponseEntity<Map<String,String>> createArticle(Authentication auth, @RequestParam Integer id_theme, @RequestParam String title, @RequestParam String contenu){
-		if(auth==null) {
+		if(auth == null || !auth.isAuthenticated()) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("message", "Authorization invalid"));
 		}
 		if(title.trim() == "" || contenu.trim() == "") {

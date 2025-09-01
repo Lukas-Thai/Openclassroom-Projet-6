@@ -47,7 +47,7 @@ public class ThemeController {
 	@SecurityRequirement(name = "Bearer Authentication")
 	@PutMapping("/subscribe/{id}")
 	public ResponseEntity<Map<String,String>> subscribeOrUnsubscribeTheme(Authentication auth,@PathVariable Integer id){
-		if(auth==null) {
+		if(auth == null || !auth.isAuthenticated()) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("message", "Authorization invalid"));
 		}
 		String email = auth.getName();
@@ -55,7 +55,7 @@ public class ThemeController {
 		if(user==null) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("message", "Unknown or deleted user"));
 		}try {
-			boolean result = abonserv.SubscribeOrUnsubscribe(id, user.getId_user());
+			boolean result = abonserv.SubscribeOrUnsubscribe(id, user.getIdUser());
 			if(result) {
 				return ResponseEntity.ok(Map.of("message"," subscribe success"));
 			}

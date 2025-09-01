@@ -12,7 +12,8 @@ import jakarta.persistence.Id;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id_user;
+    @Column(name="id_user")
+    private Integer idUser;
 
     @Column(unique = true)
     private String email;
@@ -27,11 +28,11 @@ public class User {
     private LocalDateTime created_at;
 
     private LocalDateTime updated_at;
-    public Integer getId_user() {
-		return id_user;
+	public Integer getIdUser() {
+		return idUser;
 	}
-	public void setId_user(Integer id_user) {
-		this.id_user = id_user;
+	public void setIdUser(Integer idUser) {
+		this.idUser = idUser;
 	}
 	public String getEmail() {
 		return email;

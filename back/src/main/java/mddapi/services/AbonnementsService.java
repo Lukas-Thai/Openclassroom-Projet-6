@@ -23,19 +23,18 @@ private UserRepository UserRep;
 		UserRep=ur;
 	}
 	public boolean SubscribeOrUnsubscribe(Integer id_theme, Integer id_user) {
-		Abonnement subscribeExist = AbonRep.findByThemeAndUser(id_theme, id_user).orElse(null);
+		Abonnement subscribeExist = AbonRep.findByTheme_IdThemeAndUser_IdUser(id_theme, id_user).orElse(null);
 		if(subscribeExist != null) {//cas de désabonnement
 			AbonRep.delete(subscribeExist);
 			return false; //on return false pour signaler le désabonnement
 		}
 		else {//cas abonnement il faut créer la ligne
 			Abonnement toSave= new Abonnement();
-			Theme theme = ThemeRep.findById(id_theme).orElseGet(null);
+			Theme theme = ThemeRep.findById(id_theme).orElse(null);
 			User user = UserRep.findById(id_user).orElse(null);
 			if(theme==null || user==null) {
 				throw new EntityNotFoundException();
 			}
-			toSave.setDate_abonnement(LocalDateTime.now());
 			toSave.setTheme(theme);
 			toSave.setUser(user);
 			AbonRep.save(toSave);

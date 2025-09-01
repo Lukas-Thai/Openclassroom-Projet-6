@@ -1,0 +1,24 @@
+<app-header></app-header>
+<img class="logo" src="/assets/logo_p6.png" alt="logo" />
+<img class="back_arrow" src="/assets/back_arrow.png" alt="fleche retour en arrière" [routerLink]="''">
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="form">
+  <h1>Se connecter</h1>
+
+  <div class="field">
+    <label for="identifier">E-mail ou nom d’utilisateur</label>
+    <input id="identifier" type="text" formControlName="identifier" />
+  </div>
+
+  <div class="field">
+    <label for="password">Mot de passe</label>
+    <input id="password" type="password" formControlName="password" />
+  </div>
+
+  <div class="actions">
+    <button type="submit" [disabled]="loginForm.invalid">Se connecter</button>
+  </div>
+
+  <div *ngIf="loginError" class="error-message">
+    {{ loginError }}
+  </div>
+</form>

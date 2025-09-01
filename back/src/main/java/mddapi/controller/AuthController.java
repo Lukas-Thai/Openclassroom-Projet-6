@@ -56,14 +56,17 @@ public class AuthController {
 		        return ResponseEntity.ok(Map.of("token", token));
 	    	}
 	    	catch(Exception e) {
-	    		return ResponseEntity.status(HttpStatus.CONFLICT).body(Map.of("message", "Un compte avec cet email existe déjà"));
+	    		return ResponseEntity.status(HttpStatus.CONFLICT).body(Map.of("message",e.getMessage()));
 	    	}
 
 	    }
 	    @Operation(summary = "Allow the user to login into their account")
 	    @PostMapping("/login")
 	    public ResponseEntity<Map<String, String>> login(@RequestBody LoginRequest loginRequest) {
-	        User user = userService.findByEmail(loginRequest.getEmail());//on cherche si un utilisateur existe avec l'email
+	        User user = userService.findByEmail(loginRequest.getIdentifier());//on cherche si un utilisateur existe avec l'email
+	        if(user==null) {
+	        	user = userService.findByUsername(loginRequest.getIdentifier());
+	        }
 	        if(user==null) {
 	    		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("message", "L'email ou le mot de passe est erroné"));//pas d'email existant
 	        }
@@ -80,11 +83,11 @@ public class AuthController {
 	    @SecurityRequirement(name = "Bearer Authentication")
 	    @GetMapping("/me")
 	    public ResponseEntity<UserResponse> me(Authentication auth){
-	    	if(auth == null) {
+	    	if(auth == null || !auth.isAuthenticated()) {
 	    		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 	    	}
 	    	String email = auth.getName();// à partir du token JWT on retrouve l'email
-	    	if(email=="") {
+	    	if(email == null || email.isEmpty()) {
 	    		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 	    	}
 	    	User user = userService.findByEmail(email);//on cherche l'utilisateur à partir de son email
@@ -93,5 +96,22 @@ public class AuthController {
 	        }
 	        UserResponse userInfo = InfoBuilder.userInfoBuilder(user);//on formate les données de l'utilisateur
 	        return ResponseEntity.ok(userInfo);
+	    }
+	    @Operation(summary = "Return if a JWT Token is still valid or not")
+	    @SecurityRequirement(name = "Bearer Authentication")
+	    @GetMapping("/check")
+	    public ResponseEntity<Map<String, Boolean>> checkToken(Authentication auth) {
+	        if (auth == null || !auth.isAuthenticated()) {
+	            return ResponseEntity.ok(Map.of("valid", false));
+	        }
+	        String email = auth.getName(); // récupère l'email depuis le token
+	        if (email == null || email.isEmpty()) {
+	            return ResponseEntity.ok(Map.of("valid", false));
+	        }
+	        User user = userService.findByEmail(email);
+	        if (user == null) {
+	            return ResponseEntity.ok(Map.of("valid", false));
+	        }
+	        return ResponseEntity.ok(Map.of("valid", true));
 	    }
 }

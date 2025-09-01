@@ -30,7 +30,7 @@ public class UserController {
 	@SecurityRequirement(name = "Bearer Authentication")
     @PostMapping("/update")
 	public ResponseEntity<Map<String,String>> updateUser(Authentication auth, @RequestParam String username, @RequestParam String email, @RequestParam String password){
-		if(auth==null) {
+		if(auth == null || !auth.isAuthenticated()) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("message", "Authorization invalid"));
 		}
 		String authEmail = auth.getName();

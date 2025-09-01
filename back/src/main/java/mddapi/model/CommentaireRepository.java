@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CommentaireRepository extends JpaRepository<Commentaire,Integer>{
 	public Optional<Commentaire> findById(Integer id_commentaire);
-	public List<Commentaire> findByArticle(Integer id_article);
+	public List<Commentaire> findByArticle_IdArticle(Integer id_article);
 }

@@ -12,7 +12,7 @@ public class InfoBuilder {
 	private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy/MM/dd");
     public static UserResponse userInfoBuilder(User user){//permet de convertir un objet user en map pour l'envoi du résultat d'une requete API
         UserResponse dto = new UserResponse();
-        dto.setId(user.getId_user());
+        dto.setId(user.getIdUser());
         dto.setName(user.getUsername());
         dto.setEmail(user.getEmail());
         dto.setUsername(user.getUsername());

@@ -24,12 +24,21 @@ public class UserService {
     }
     
     public User findByEmail(String email) {//cherche un utilisateur à partir de son email
-        return usersRepository.findByEmail(email).orElseGet(null);
+        return usersRepository.findByEmail(email).orElse(null);
     }
     public User findById(Integer id) {//cherche un utilisateur à partir de son id
-        return usersRepository.findById(id).orElseGet(null);
+        return usersRepository.findById(id).orElse(null);
+    }
+    public User findByUsername(String Username) {
+    	return usersRepository.findByUsername(Username).orElse(null);
     }
     public User registerUser(User user) {//enregistre un utilisateur en bd
+    	if(usersRepository.findByEmail(user.getEmail().trim()).isPresent()) {
+			throw new RuntimeException("L'email est déjà pris");
+		}
+    	if(usersRepository.findByUsername(user.getUsername().trim()).isPresent()) {
+			throw new RuntimeException("L'username est déjà pris");
+		}
     	user.setEmail(user.getEmail().trim());
     	user.setUsername(user.getUsername().trim());
         user.setPassword(passwordEncoder.encode(user.getPassword()));//hashage du mnot de passe 
@@ -38,13 +47,13 @@ public class UserService {
     }
     public User updateUser(User oldUser,User updatedUser) {
     	if(updatedUser.getEmail() != "") {
-    		if(usersRepository.findByEmail(updatedUser.getEmail()).orElseGet(null)!=null) {
+    		if(usersRepository.findByEmail(updatedUser.getEmail()).isPresent()) {
     			throw new RuntimeException("L'email est déjà pris");
     		}
     		oldUser.setEmail(updatedUser.getEmail());
     	}
     	if(updatedUser.getUsername() != "") {
-    		if(usersRepository.findByUsername(updatedUser.getUsername()).orElseGet(null)!=null) {
+    		if(usersRepository.findByUsername(updatedUser.getUsername()).isPresent()) {
     			throw new RuntimeException("L'username est déjà pris");
     		}
     	}

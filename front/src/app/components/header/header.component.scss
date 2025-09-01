@@ -1,0 +1,123 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  font-family: sans-serif;
+}
+
+.header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  height: 60px;
+  border-bottom: 1px solid #ddd;
+  box-sizing: border-box;
+  background: white;
+  position: relative;
+  z-index: 1001;
+}
+
+.logo {
+  height: 40px;
+  flex: 0 0 auto;
+  cursor: pointer;
+}
+
+.navigation {
+  margin-left: auto;
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+  align-items: center;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.navigation h2 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.logout {
+  color: red;
+}
+
+.profile {
+  height: 35px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.active {
+  color: purple;
+}
+
+.menu {
+  display: none;
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 1000;
+}
+
+.side-menu {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 55%;
+  max-width: 300px;
+  height: 100%;
+  background: white;
+  box-shadow: -2px 0 10px rgba(0,0,0,0.2);
+  padding: 2rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  transition: transform 0.3s ease-in-out;
+  transform: translateX(100%); 
+  z-index: 1001;
+}
+
+.side-menu h2 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+
+.side-menu .profile {
+  height: 35px;
+  width: 35px;
+  object-fit: cover;
+
+  align-self: flex-end; 
+  cursor: pointer;
+}
+
+.side-menu.open {
+  transform: translateX(0);
+}
+
+@media (max-width: 600px) {
+  .navigation {
+    display: none; 
+  }
+
+  .menu {
+    height: 35px;
+    display: block; 
+    margin-left: auto;
+    cursor: pointer;
+  }
+  .profile{
+    height:20px;
+  }
+}

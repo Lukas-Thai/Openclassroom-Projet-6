@@ -7,7 +7,8 @@ import jakarta.persistence.*;
 public class Article {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id_article;
+    @Column(name="id_article")
+    private Integer idArticle;
 
     @ManyToOne
     @JoinColumn(name = "id_theme", nullable = false)
@@ -26,12 +27,12 @@ public class Article {
     @Column(nullable = false)
     private LocalDateTime date_creation;
 
-	public Integer getId_article() {
-		return id_article;
+	public Integer getIdArticle() {
+		return idArticle;
 	}
 
-	public void setId_article(Integer id_article) {
-		this.id_article = id_article;
+	public void setIdArticle(Integer idArticle) {
+		this.idArticle = idArticle;
 	}
 
 	public Theme getTheme() {

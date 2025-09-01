@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ArticleRepository extends JpaRepository<Article,Integer>{
 	public Optional<Article> findById(Integer id_article);
-	public List<Article> findByTheme(Integer id_theme);
+	public List<Article> findByTheme_IdTheme(Integer id_theme);
 	public List<Article> findByThemeIn(List<Theme> themes);
 }
