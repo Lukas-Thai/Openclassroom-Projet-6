@@ -1,6 +1,8 @@
 package mddapi.services;
 
-import java.time.LocalDateTime;
+
+import java.util.List;
+import java.util.ArrayList;
 
 import org.springframework.stereotype.Service;
 
@@ -21,6 +23,14 @@ private UserRepository UserRep;
 		AbonRep=ab;
 		ThemeRep=tr;
 		UserRep=ur;
+	}
+	public List<Integer> getUserAbonnement(User user){
+		List<Abonnement> abonList= AbonRep.findByUser_IdUser(user.getIdUser());
+		ArrayList<Integer> result = new ArrayList<>();
+		for(Abonnement abon:abonList) {
+			result.add(abon.getTheme().getIdTheme());
+		}
+		return result;
 	}
 	public boolean SubscribeOrUnsubscribe(Integer id_theme, Integer id_user) {
 		Abonnement subscribeExist = AbonRep.findByTheme_IdThemeAndUser_IdUser(id_theme, id_user).orElse(null);

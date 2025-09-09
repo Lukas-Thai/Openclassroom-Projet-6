@@ -37,7 +37,7 @@
 
 .articles {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); // toujours 2 colonnes
+  grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
   margin: 0 4%;
 }
@@ -47,7 +47,7 @@
   padding: 1rem;
   border-radius: 10px;
   min-height: 200px; 
-
+  cursor: pointer;
   h2 {
     margin: 0 0 0.5rem 0;
   }
@@ -64,25 +64,24 @@
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
-    -webkit-line-clamp: 5; /* 3 lignes max */
+    -webkit-line-clamp: 5;
     -webkit-box-orient: vertical;
   }
 }
 
-/* 📱 Responsive mobile */
 @media (max-width: 768px) {
   .articles {
-    grid-template-columns: 1fr; // une seule colonne
+    grid-template-columns: 1fr; 
   }
 
   .toolbar {
-    flex-direction: column; // empile les boutons
+    flex-direction: column; 
     gap: 0.8rem;
     text-align: center;
 
     .create,
     .sort {
-      width: auto; // prend toute la largeur
+      width: auto;
       text-align: center;
     }
   }

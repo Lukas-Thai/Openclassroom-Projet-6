@@ -1,9 +1,37 @@
 
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { AuthService } from '../../services/Auth/auth.service';
 import { Router } from '@angular/router';
 
+
+
+function passwordValidator(control: AbstractControl): ValidationErrors | null {
+  const value: string = control.value ?? '';
+  if (!value) return null; // champ vide = pas d'erreur (facultatif)
+
+  const errors: any = {};
+
+  if (value.length < 8) {
+    // clé 'minlength' pour être cohérent avec Angular
+    errors['minlength'] = { requiredLength: 8, actualLength: value.length };
+  }
+  if (!/[a-z]/.test(value)) {
+    errors['lowercase'] = true;
+  }
+  if (!/[A-Z]/.test(value)) {
+    errors['uppercase'] = true;
+  }
+  if (!/[0-9]/.test(value)) {
+    errors['digit'] = true;
+  }
+  // ton test pour caractère spécial
+  if (!/[^a-zA-Z0-9 ]/.test(value)) {
+    errors['special'] = true;
+  }
+
+  return Object.keys(errors).length ? errors : null;
+}
 @Component({
   selector: 'app-inscription',
   templateUrl: './inscription.component.html',
@@ -21,27 +49,11 @@ export class InscriptionComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [
         Validators.required,
-        Validators.minLength(8),
-        this.passwordStrengthValidator
+        passwordValidator
       ]]
     });
   }
-  passwordStrengthValidator(control: AbstractControl) {
-    const value = control.value || '';
-    const errors: any = {};
 
-    if (!/[a-z]/.test(value)) {
-      errors.lowercase = true;
-    }
-    if (!/[A-Z]/.test(value)) {
-      errors.uppercase = true;
-    }
-    if (!/[^a-zA-Z0-9 ]/.test(value)) {
-      errors.special = true;
-    }
-
-    return Object.keys(errors).length ? errors : null;
-  }
 
   get f() {
     return this.userForm.controls;

@@ -1,0 +1,42 @@
+<app-header></app-header>
+<div class="article-container" *ngIf="article">
+  <div class="title">
+    <img class="back_arrow" src="/assets/back_arrow.png" alt="fleche retour en arrière" [routerLink]="''">
+    <h1>{{ article.title }}</h1>
+  </div>
+
+  <div class="body">
+    <div class="meta">
+      <span>{{ article.created_at | date:'dd/MM/yyyy' }}</span>
+      <span>{{ article.author }}</span>
+      <span>{{ article.nom_theme }}</span>
+    </div>
+    <div class="meta-mobile">
+      <div class="meta-inside">
+         <span>{{ article.created_at | date:'dd/MM/yyyy' }}</span>
+         <span>{{ article.author }}</span>
+         </div>
+       <span>{{ article.nom_theme }}</span>
+    </div>
+    <p class="contenu">{{ article.content }}</p>
+  </div>
+</div>
+
+<hr class="separateur" />
+
+<!-- Zone commentaires -->
+<div class="comments-section">
+  <h3>Commentaires</h3>
+
+  <div class="comment" *ngFor="let c of comments">
+    <span class="username">{{ c.author }}</span>
+    <div class="bubble">{{ c.content }}</div>
+  </div>
+
+  <div class="comment-form">
+    <textarea [(ngModel)]="newComment" placeholder="Écrivez ici votre commentaire"></textarea>
+    <button class="send-btn" (click)="sendComment(newComment)">
+      <img src="/assets/send_icon.png" alt="Envoyer" />
+    </button>
+  </div>
+</div>

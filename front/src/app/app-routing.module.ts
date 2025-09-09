@@ -9,7 +9,7 @@ import { NoAuthGuard } from './services/Auth/auth.noAuthGuard';
 import { ThemesComponent } from './pages/themes/themes.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { CreateArticleComponent } from './pages/create/article/article.component';
-import { CreateThemeComponent } from './pages/create/theme/theme.component';
+import { ArticlesComponent } from './pages/articles/articles.component';
 
 
 const routes: Routes = [{ path: '', component: HomeComponent, canActivate: [NoAuthGuard] },
@@ -19,7 +19,7 @@ const routes: Routes = [{ path: '', component: HomeComponent, canActivate: [NoAu
 {path:'theme', component:ThemesComponent,canActivate: [AuthGuard]},
 {path:'profile', component:ProfileComponent,canActivate: [AuthGuard]},
 {path:'createArticle',component:CreateArticleComponent,canActivate: [AuthGuard]},
-{path:'createTheme',component:CreateThemeComponent,canActivate: [AuthGuard]}
+{path:'article/:id', component:ArticlesComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({

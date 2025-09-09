@@ -65,4 +65,18 @@ public class ArticlesService {
 		toSave.setUser(user);
 		artRep.save(toSave);
 	}
+	public ArticleResponse fetchArticle(Integer id_article) {
+		Article art= artRep.findById(id_article).orElse(null);
+		if(art==null) {
+			throw new EntityNotFoundException();
+		}
+		ArticleResponse result= new ArticleResponse();
+		result.setAuthor(art.getUser().getUsername());
+		result.setContent(art.getContenu());
+		result.setCreated_at(art.getDate_creation());
+		result.setId_article(art.getIdArticle());
+		result.setNom_theme(art.getTheme().getName());
+		result.setTitle(art.getTitre());
+		return result;
+	}
 }

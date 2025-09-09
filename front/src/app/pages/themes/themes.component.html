@@ -1,1 +1,17 @@
-<p>themes works!</p>
+<app-header></app-header>
+
+<div class="themes">
+  <div class="card" *ngFor="let theme of themes">
+    <h2>{{ theme.name }}</h2>
+    <p class="content">{{ theme.description }}</p>
+
+    <div class="button-container">
+      <button 
+        class="subscribe" 
+        [disabled]="abonnements.includes(theme.idTheme)"
+        (click)="subscribe(theme)">
+        {{ abonnements.includes(theme.idTheme) ? 'Déjà abonné' : "S'abonner" }}
+      </button>
+    </div>
+  </div>
+</div>

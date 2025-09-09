@@ -4,15 +4,16 @@ import { AuthService } from './auth.service';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ToastService } from '../SnackBar/snackbar.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthGuard implements CanActivate {
-  constructor(private authService: AuthService, private router: Router,private snackBar: MatSnackBar) {}
+  constructor(private authService: AuthService, private router: Router,private snackBar: ToastService) {}
 
     canActivate(): Observable<boolean> {
         const token = this.authService.getToken();
         if (!token) {
-            this.showToast("Vous devez d'abord vous connecter.");
+            this.snackBar.show("Vous devez d'abord vous connecter.",5000,'top');
             this.router.navigate(['/']);
             return of(false);
         }
@@ -20,7 +21,7 @@ export class AuthGuard implements CanActivate {
         return this.authService.checkSession().pipe(
             map((isValid) => {
             if (!isValid) {
-                this.showToast('Session expirée. Veuillez vous reconnecter.');
+                this.snackBar.show('Session expirée. Veuillez vous reconnecter.',5000,'top');
                 this.authService.logout();
                 this.router.navigate(['/']);
                 return false;
@@ -28,19 +29,11 @@ export class AuthGuard implements CanActivate {
             return true;
             }),
             catchError(() => {
-            this.showToast('Session expirée. Veuillez vous reconnecter.');
+            this.snackBar.show('Session expirée. Veuillez vous reconnecter.',5000,'top');
             this.authService.logout();
             this.router.navigate(['/']);
             return of(false);
             })
         );
-    }
-
-    private showToast(message: string) {
-        this.snackBar.open(message, 'Fermer', {
-            duration: 10000,
-            horizontalPosition: 'center',
-            verticalPosition: 'top'
-        });
     }
 }

@@ -15,7 +15,6 @@ export class AccueilComponent implements OnInit {
     this.artServ.getAllArticles().subscribe({
     next: (data) => {
       this.articles = data;
-      console.log(this.articles);
     },
     error: (err) => {
       console.error('Erreur lors du chargement des articles', err);

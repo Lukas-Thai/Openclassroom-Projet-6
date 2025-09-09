@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,18 +35,23 @@ public class CommentaireController {
 	@SecurityRequirement(name = "Bearer Authentication")
 	@GetMapping("/{id}")
 	public ResponseEntity<Map<String,Object>> fetchAllCommentaryFromArticle(@PathVariable Integer id){
-		return ResponseEntity.ok(Map.of("commentaire",comserv.fetchCommentaireByArticle(id)));
+		if(id==null) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("message","The request must include the id of the article"));
+		}
+		return ResponseEntity.ok(Map.of("commentaires",comserv.fetchCommentaireByArticle(id)));
 	}
-	@Operation(summary = "Get all commentary from an article with its id")
+	@Operation(summary = "Create commentary for an article")
 	@SecurityRequirement(name = "Bearer Authentication")
-	@PutMapping("/{id}")
+	@GetMapping("/create/{id}")
 	public ResponseEntity<Map<String,String>> createCommentForArticle(Authentication auth,@PathVariable Integer id,@RequestParam String contenu){
 		if(auth == null || !auth.isAuthenticated()) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("message", "Authorization invalid"));
 		}
-		if(contenu.trim() == "") {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("message","Le commentaire ne peut pas être vide"));
-		}
+		System.out.println(contenu);
+	    if (contenu == null || contenu.trim().isEmpty()) {
+	        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+	                .body(Map.of("message","Le commentaire ne peut pas être vide"));
+	    }
 		String email = auth.getName();
 		User user = userserv.findByEmail(email);
 		if(user==null) {

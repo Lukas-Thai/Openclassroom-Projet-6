@@ -7,7 +7,7 @@ import { ConnexionComponent } from './pages/connexion/connexion.component';
 import { HeaderComponent } from './components/header/header.component';
 
 import { AppRoutingModule } from './app-routing.module';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptor } from './services/Auth/auth.interceptor';
 import { AccueilComponent } from './pages/accueil/accueil.component';
@@ -16,12 +16,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ThemesComponent } from './pages/themes/themes.component';
 import { CreateArticleComponent } from './pages/create/article/article.component';
-import { CreateThemeComponent } from './pages/create/theme/theme.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { NoAuthGuard } from './services/Auth/auth.noAuthGuard';
+import { ArticlesComponent } from './pages/articles/articles.component';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, InscriptionComponent, ConnexionComponent, HeaderComponent, AccueilComponent, ThemesComponent, CreateArticleComponent, CreateThemeComponent, ProfileComponent],
+  declarations: [AppComponent, HomeComponent, InscriptionComponent, ConnexionComponent, HeaderComponent, AccueilComponent, ThemesComponent, CreateArticleComponent, ProfileComponent, ArticlesComponent],
   imports: [
     BrowserAnimationsModule, 
     MatSnackBarModule,
@@ -30,6 +30,7 @@ import { NoAuthGuard } from './services/Auth/auth.noAuthGuard';
     ReactiveFormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    FormsModule,
   ],
   providers: [ { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }, AuthGuard, NoAuthGuard],
   bootstrap: [AppComponent],

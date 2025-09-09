@@ -57,7 +57,7 @@ public class ThemeController {
 		}try {
 			boolean result = abonserv.SubscribeOrUnsubscribe(id, user.getIdUser());
 			if(result) {
-				return ResponseEntity.ok(Map.of("message"," subscribe success"));
+				return ResponseEntity.ok(Map.of("message","subscribe success"));
 			}
 			else {
 				return ResponseEntity.ok(Map.of("message","unsubscribe success"));

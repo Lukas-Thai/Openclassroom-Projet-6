@@ -1,0 +1,112 @@
+.profile-form {
+  max-width: 400px;
+  margin: 2rem auto;
+  text-align: center;
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  input {
+    padding: 0.8rem;
+    border: 2px solid #7b61ff;
+    border-radius: 8px;
+    outline: none;
+
+    &:focus {
+      border-color: #5a45d6;
+    }
+  }
+
+  button {
+    background: #7b61ff;
+    color: white;
+    border: none;
+    padding: 0.8rem;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+
+    &:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+  }
+
+  .error {
+    color: red;
+    font-size: 0.85rem;
+  }
+}
+
+.themes {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin: 0 4%;
+  margin-top: 2%;
+}
+.separateur{
+    margin:0 4%;
+}
+h1{
+    text-align: center;
+    margin-top: 2%;
+}
+.card {
+  background: #f7f7f7;
+  padding: 1rem;
+  border-radius: 10px;
+  min-height: 200px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; 
+  
+  h2 {
+    margin: 0 0 0.5rem 0;
+  }
+
+  .content {
+    flex-grow: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    margin-bottom: 1rem;
+  }
+
+  .button-container {
+    display: flex;
+    justify-content: center; 
+  }
+}
+
+.unsubscribe {
+  background: #7b61ff;
+  color: white;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+
+  &:hover:enabled {
+    background: #654cff;
+  }
+
+  &:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+  }
+}
+
+@media (max-width: 768px) {
+  .themes {
+    grid-template-columns: 1fr;
+  }
+}

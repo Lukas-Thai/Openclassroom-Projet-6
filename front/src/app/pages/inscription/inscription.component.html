@@ -37,25 +37,17 @@
     <div class="field">
       <label for="password">Mot de passe</label>
       <input id="password" formControlName="password" type="password" />
-      <div class="error" *ngIf="f['password'].touched && f['password'].invalid">
-        <div *ngIf="f['password'].errors?.['required']">
-          Le mot de passe est requis.
-        </div>
-        <div *ngIf="f['password'].errors?.['minlength']">
-          Au moins 8 caractères requis.
-        </div>
-        <div *ngIf="f['password'].errors?.['lowercase']">
-          Doit contenir au moins une lettre minuscule.
-        </div>
-        <div *ngIf="f['password'].errors?.['uppercase']">
-          Doit contenir au moins une lettre majuscule.
-        </div>
-        <div *ngIf="f['password'].errors?.['special']">
-          Doit contenir au moins un caractère spécial.
-        </div>
-      </div>
-    </div>
+      <pre *ngIf="f['password']?.errors">{{ f['password'].errors | json }}</pre>
 
+  <div class="error" *ngIf="(f['password'].touched || f['password'].dirty) && f['password'].invalid">
+    <div *ngIf="f['password'].errors?.['minlength']">Au moins 8 caractères requis.</div>
+    <div *ngIf="f['password'].errors?.['lowercase']">Doit contenir au moins une lettre minuscule.</div>
+    <div *ngIf="f['password'].errors?.['uppercase']">Doit contenir au moins une lettre majuscule.</div>
+    <div *ngIf="f['password'].errors?.['digit']">Doit contenir au moins un chiffre.</div>
+    <div *ngIf="f['password'].errors?.['special']">Doit contenir au moins un caractère spécial.</div>
+  </div>
+
+      </div>
     <div class="actions">
       <button type="submit" [disabled]="userForm.invalid">Envoyer</button>
     </div>

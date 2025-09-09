@@ -46,18 +46,24 @@ public class UserService {
         return usersRepository.save(user);
     }
     public User updateUser(User oldUser,User updatedUser) {
-    	if(updatedUser.getEmail() != "") {
-    		if(usersRepository.findByEmail(updatedUser.getEmail()).isPresent()) {
-    			throw new RuntimeException("L'email est déjà pris");
-    		}
-    		oldUser.setEmail(updatedUser.getEmail());
-    	}
-    	if(updatedUser.getUsername() != "") {
-    		if(usersRepository.findByUsername(updatedUser.getUsername()).isPresent()) {
-    			throw new RuntimeException("L'username est déjà pris");
+    	if(!updatedUser.getEmail().isBlank()) {
+    		if(oldUser.getEmail().compareTo(updatedUser.getEmail())!=0)
+    		{
+        		if(usersRepository.findByEmail(updatedUser.getEmail()).isPresent()) {
+        			throw new RuntimeException("L'email est déjà pris");
+        		}
+        		oldUser.setEmail(updatedUser.getEmail());
     		}
     	}
-    	if(updatedUser.getPassword()!="") {
+    	if(!updatedUser.getUsername().isBlank()) {
+    		if(oldUser.getUsername().compareTo(updatedUser.getUsername())!=0) {
+        		if(usersRepository.findByUsername(updatedUser.getUsername()).isPresent()) {
+        			throw new RuntimeException("L'username est déjà pris");
+        		}
+        		oldUser.setUsername(updatedUser.getUsername());
+    		}
+    	}
+    	if(!updatedUser.getPassword().isBlank()) {
     		oldUser.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
     	}
     	return usersRepository.save(oldUser);

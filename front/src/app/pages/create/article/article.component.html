@@ -1,1 +1,52 @@
-<p>article works!</p>
+<app-header></app-header>
+
+<div class="menu">
+  <img
+    class="back_arrow"
+    src="/assets/back_arrow.png"
+    alt="fleche retour en arrière"
+    [routerLink]="''"
+  />
+  <h1>Créer un nouvel article</h1>
+</div>
+
+<div class="form-container">
+  <form
+    (ngSubmit)="createArticle(selectedTheme, title, content)"
+    #articleForm="ngForm"
+  >
+
+  <select
+    name="theme"
+    [(ngModel)]="selectedTheme"
+    required
+    class="input-field"
+  >
+    <option value="null" disabled hidden selected>Sélectionner un thème</option>
+    <option *ngFor="let theme of themes" [ngValue]="theme">
+      {{ theme.name }}
+    </option>
+  </select>
+
+    <input
+      type="text"
+      name="title"
+      [(ngModel)]="title"
+      placeholder="Titre de l’article"
+      required
+      class="input-field"
+    />
+
+    <textarea
+      name="content"
+      [(ngModel)]="content"
+      placeholder="Contenu de l’article"
+      required
+      class="input-field textarea"
+    ></textarea>
+
+    <button type="submit" class="btn-create" [disabled]="!articleForm.valid">
+      Créer
+    </button>
+  </form>
+</div>

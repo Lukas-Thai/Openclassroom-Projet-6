@@ -1,6 +1,5 @@
 package mddapi.model;
 
-import java.time.LocalDateTime;
 import jakarta.persistence.*;
 
 @Entity
