@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"mddapi"},{"l":"mddapi.configuration"},{"l":"mddapi.controller"},{"l":"mddapi.dto"},{"l":"mddapi.helper"},{"l":"mddapi.model"},{"l":"mddapi.services"}];updateSearchResults();

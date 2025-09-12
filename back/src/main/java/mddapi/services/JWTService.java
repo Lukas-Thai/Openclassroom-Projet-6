@@ -14,46 +14,59 @@ import org.springframework.stereotype.Service;
 
 import mddapi.model.User;
 
-
-
+/**
+ * Service de gestion des tokens JWT.
+ */
 @Service
 public class JWTService {
+    private JwtEncoder jwtEncode;
+    private JwtDecoder jwtDecode;
 
-	private JwtEncoder jwtEncode; 
-	private JwtDecoder jwtDecode;
-	
-	public JWTService (JwtEncoder jwt, JwtDecoder jwtDecode ) {
-		this.jwtEncode = jwt;
-		this.jwtDecode = jwtDecode;
-	}
-	public String generateTokenForUser(User user) {//génère un token pour l'utilisateur fourni
-	    Instant now = Instant.now();
-	    
-	    String subject = user.getEmail(); 
-	    
-	    //on spécifie les caractéristiques du token
-	    JwtClaimsSet claims = JwtClaimsSet.builder()
-	            .issuer("self")
-	            .issuedAt(now)  
-	            .expiresAt(now.plus(3, ChronoUnit.DAYS)) 
-	            .subject(subject) 
-	            .build();
-	    
-	    //on définit l'algorithme du token
-	    JwtEncoderParameters jwtParams = JwtEncoderParameters.from(
-	            JwsHeader.with(MacAlgorithm.HS256).build(),  
-	            claims
-	    );
-	    
-	    //on le créer avec les paramètres fournis
-	    return this.jwtEncode.encode(jwtParams).getTokenValue();
-	}
-	public String verifyToken(String token) {
-		try {
-			Jwt decodedJwt = jwtDecode.decode(token);//si le token est valide on retourne son mail
-			return decodedJwt.getSubject();
-		}catch(Exception e) {
-			return "";//sinon on retourne rien
-		}
-	}
+    /**
+     * Constructeur.
+     */
+    public JWTService(JwtEncoder jwt, JwtDecoder jwtDecode) {
+        this.jwtEncode = jwt;
+        this.jwtDecode = jwtDecode;
+    }
+
+    /**
+     * Génère un token JWT pour un utilisateur donné.
+     *
+     * @param user utilisateur concerné
+     * @return token JWT signé
+     */
+    public String generateTokenForUser(User user) {
+        Instant now = Instant.now();
+        String subject = user.getEmail();
+
+        JwtClaimsSet claims = JwtClaimsSet.builder()
+                .issuer("self")
+                .issuedAt(now)
+                .expiresAt(now.plus(3, ChronoUnit.DAYS))
+                .subject(subject)
+                .build();
+
+        JwtEncoderParameters jwtParams = JwtEncoderParameters.from(
+                JwsHeader.with(MacAlgorithm.HS256).build(),
+                claims
+        );
+
+        return this.jwtEncode.encode(jwtParams).getTokenValue();
+    }
+
+    /**
+     * Vérifie la validité d’un token et retourne son sujet.
+     *
+     * @param token token JWT
+     * @return l’adresse email contenue dans le token si valide, sinon chaîne vide
+     */
+    public String verifyToken(String token) {
+        try {
+            Jwt decodedJwt = jwtDecode.decode(token);
+            return decodedJwt.getSubject();
+        } catch (Exception e) {
+            return "";
+        }
+    }
 }

@@ -14,14 +14,15 @@ export class ProfileComponent implements OnInit {
   themes:Theme[] = [];
   abonnements:number[] = [];
   profileForm!: FormGroup;
-  
+  isSubmitting = false;
+  initialValues: { username: String, email: String } = { username: '', email: '' };
   constructor(private fb: FormBuilder,private snackbar:ToastService, private themeServ:ThemeService, private abonServ:AbonnementService, private userServ:UserService) { }
 
   ngOnInit(): void {
     this.profileForm = this.fb.group({
       username: [''],
       email: ['', Validators.email],
-      password: ['', this.passwordValidator] // ici on met notre validator custom
+      password: ['', this.passwordValidator] 
     });
     this.themeServ.getAllThemes().subscribe({
       next: (data) => {
@@ -41,6 +42,22 @@ export class ProfileComponent implements OnInit {
         this.snackbar.show("Erreur lors du chargement des abonnements",5000,'bottom');
       }
     });
+    this.userServ.getUser().subscribe({
+      next: (data) => {
+        this.profileForm.patchValue({
+          username: data.username,
+          email: data.email
+        });
+        this.initialValues = {
+          username: data.username,
+          email: data.email
+        };
+      },
+      error: (err) => {
+        console.error('Erreur lors du chargement des informations utilisateur', err);
+        this.snackbar.show("Erreur lors du chargement des informations utilisateur",5000,'bottom');
+      }
+    });
   }
   get subscribedThemes(): Theme[] {
   return this.themes.filter(t => this.abonnements.includes(t.idTheme));
@@ -50,11 +67,16 @@ export class ProfileComponent implements OnInit {
   }
   get atLeastOneFieldFilled(): boolean {
     const { username, email, password } = this.profileForm.value;
-    return !!(username || email || password);
+    
+  const usernameChanged = username && username !== this.initialValues.username;
+  const emailChanged = email && email !== this.initialValues.email;
+  const passwordFilled = !!password;
+
+  return usernameChanged || emailChanged || passwordFilled;
   }
   passwordValidator(control: AbstractControl): ValidationErrors | null {
   const value = control.value;
-  if (!value) return null; // champ vide = pas d'erreur (car pas obligatoire)
+  if (!value) return null; 
 
   const errors: any = {};
 
@@ -70,7 +92,7 @@ export class ProfileComponent implements OnInit {
   if (!/[0-9]/.test(value)) {
     errors.digit = true;
   }
-  if (!/[^a-zA-Z0-9 ]/.test(value)) { // ton test pour caractère spécial
+  if (!/[^a-zA-Z0-9 ]/.test(value)) { 
     errors.special = true;
   }
 
@@ -83,13 +105,16 @@ export class ProfileComponent implements OnInit {
     }
 
     const { username, email, password } = this.profileForm.value;
+    this.isSubmitting = true;
     this.userServ.updateUser(email, username, password).subscribe({
       next: () => {
         this.snackbar.show("Profil mis à jour !", 5000, 'bottom');
         this.profileForm.reset();
+        this.isSubmitting = false;
       },
       error: (err) => {
         console.error('Erreur lors de la mise à jour du profil', err);
+        this.isSubmitting = false;
         if(err.error.message)
         {
           this.snackbar.show(err.error.message, 5000, 'bottom');

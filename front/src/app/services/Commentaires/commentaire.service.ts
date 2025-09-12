@@ -5,9 +5,7 @@ export interface Commentaire{
     content: string;
     date: Date;
 }
-interface ApiResponseCommentaire {
-    commentaires: Commentaire[];
-}
+
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -22,7 +20,7 @@ export class CommentaireService {
     private constructor(private http: HttpClient) {}
 
     getAllCommentaires(id:number): Observable<Commentaire[]> {
-        return this.http.get<ApiResponseCommentaire>(this.apiUrl+`/${id}`).pipe(
+        return this.http.get<{commentaires: Commentaire[];}>(this.apiUrl+`/${id}`).pipe(
             map(response => response.commentaires)
         );
     }

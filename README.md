@@ -1,25 +1,47 @@
-# P6-Full-Stack-reseau-dev
+# Prérequis
 
-## Front
+- **Java version** : 17 (OpenJDK 17 recommandé)  
+- **Maven version** : 3.8+  
+- **Node.js version** : 16.x ou supérieur  
+- **npm version** : 8.x ou supérieur  
+- **Git** : pour cloner le projet  
+- **Base de données** : MySQL 8.0 (ou MariaDB compatible)  
+- **IDE recommandé** : IntelliJ IDEA / Eclipse / VSCode
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.1.3.
+# Clonage du projet
 
-Don't forget to install your node_modules before starting (`npm install`).
+- Ouvrez un terminal et clonez le dépôt Git en tappant la commande ```git clone https://github.com/Lukas-Thai/Openclassroom-Projet-6```
 
-### Development server
+# Mise en place du Frontend
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- Ouvrez un terminal et veillez être à la racine du projet
+- Placez-vous dans le fichier avec la commande ```cd front```
+- Télécharger les dépendances du frontend avec la commande ```npm ci```
 
-### Build
+# Mise en place de la base de données
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+- Créer une nouvelle base de données dans votre SGBD (Système de Gestion de Base de Données)
+- Importez la base de données en exécutant le script "sql.sql"
 
-### Where to start
+# Mise en place du Backend 
 
-As you may have seen if you already started the app, a simple home page containing a logo, a title and a button is available. If you take a look at its code (in the `home.component.html`) you will see that an external UI library is already configured in the project.
+- Importez un projet Java à partir du fichier `back` avec votre IDE Java
+- Ouvrez le fichier application.properties situé à cet endroit Backend\src\main\resources\application.properties
+- Remplacez PORT par le port pour se connecter à votre base de données
+- Remplacez DATABASE_NAME par le nom de la base de données qui correspond
+- Remplacez USERNAME et PASSWORD par vos identifiants qui servent à se connecter à la base de données
+- Remplacez JWTKEY par une chaine de caractère d'au moins 88 caractères
+- Importez les dépendances en exécutant la commande ```mvn clean install``` dans le fichier Backend. (Si vous êtes sur Eclipse : Click droit sur le projet dans le Package Explorer > Maven > Update Projects > OK)
 
-This library is `@angular/material`, it's one of the most famous in the angular ecosystem. As you can see on their docs (https://material.angular.io/), it contains a lot of highly customizable components that will help you design your interfaces quickly.
+# Lancement du Frontend
 
-Note: I recommend to use material however it's not mandatory, if you prefer you can get rid of it.
+- À partir du fichier Frontend, ouvrez l'invite de commande et tappez la commande ```npm start```
+- Depuis votre navigateur, allez sur l'url générée par la commande
 
-Good luck!
+# Lancement du Backend
+
+- Exécutez le projet Java depuis votre IDE avec la classe MddApiApplication située le package server
+
+# URL du Swagger
+
+localhost:8080/swagger-ui/index.html

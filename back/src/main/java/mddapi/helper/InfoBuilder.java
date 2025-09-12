@@ -13,7 +13,6 @@ public class InfoBuilder {
     public static UserResponse userInfoBuilder(User user){//permet de convertir un objet user en map pour l'envoi du résultat d'une requete API
         UserResponse dto = new UserResponse();
         dto.setId(user.getIdUser());
-        dto.setName(user.getUsername());
         dto.setEmail(user.getEmail());
         dto.setUsername(user.getUsername());
         dto.setCreated_at(user.getCreated_at().format(FORMATTER));

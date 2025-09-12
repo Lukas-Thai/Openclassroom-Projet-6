@@ -10,9 +10,7 @@ export interface Article {
     content: string;
     created_at: Date;
 }
-interface ApiResponseArticle {
-    articles: Article[];
-}
+
 @Injectable({
     providedIn: 'root'
 })
@@ -21,7 +19,7 @@ export class ArticleService {
     constructor(private http: HttpClient) {}
 
 getAllArticles(): Observable<Article[]> {
-    return this.http.get<ApiResponseArticle>(this.apiUrl).pipe(
+    return this.http.get<{articles: Article[];}>(this.apiUrl).pipe(
         map(response => response.articles)
     );
 }

@@ -30,7 +30,7 @@
     </div>
     <button
       type="submit"
-      [disabled]="!profileForm.valid || !atLeastOneFieldFilled"
+      [disabled]="!profileForm.valid || !atLeastOneFieldFilled || isSubmitting"
     >
       Sauvegarder
     </button>

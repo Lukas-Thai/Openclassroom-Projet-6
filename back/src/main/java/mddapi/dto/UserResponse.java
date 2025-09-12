@@ -2,7 +2,6 @@ package mddapi.dto;
 
 public class UserResponse {
     private Integer id;
-    private String name;
     private String email;
     private String created_at;
     private String updated_at;
@@ -18,12 +17,6 @@ public class UserResponse {
 	}
 	public void setId(Integer id) {
 		this.id = id;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
 	}
 	public String getEmail() {
 		return email;

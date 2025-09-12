@@ -3,9 +3,6 @@ export interface Theme {
     name: string;
     description: string;
 }
-interface ApiResponseTheme {
-    themes: Theme[];
-}
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -18,7 +15,7 @@ export class ThemeService {
     private apiUrlSub = '/api/theme/subscribe/';
     constructor(private http: HttpClient) {}
     getAllThemes(): Observable<Theme[]> {
-        return this.http.get<ApiResponseTheme>(this.apiUrl).pipe(
+        return this.http.get<{themes:Theme[]}>(this.apiUrl).pipe(
             map(response => response.themes)
         );
     }

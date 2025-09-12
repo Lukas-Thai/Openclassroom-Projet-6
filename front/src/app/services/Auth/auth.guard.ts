@@ -3,7 +3,6 @@ import { CanActivate, Router } from '@angular/router';
 import { AuthService } from './auth.service';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { ToastService } from '../SnackBar/snackbar.service';
 
 @Injectable({ providedIn: 'root' })
